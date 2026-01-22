@@ -67,14 +67,14 @@ const performanceLevel = computed(() => {
           </span>
         </div>
 
-        <!-- Visual score breakdown -->
-        <div v-if="props.summary.correct !== undefined" class="flex justify-center gap-2">
-          <template v-for="i in props.summary.totalCards" :key="i">
-            <div
-              class="w-3 h-3 rounded-full"
-              :class="i <= props.summary.correct ? 'bg-green-500' : 'bg-red-300'"
-            ></div>
-          </template>
+        <!-- Visual score breakdown (in order of responses) -->
+        <div v-if="props.summary.responses.length > 0" class="flex justify-center gap-2">
+          <div
+            v-for="(response, index) in props.summary.responses"
+            :key="index"
+            class="w-3 h-3 rounded-full"
+            :class="response.wasCorrect ? 'bg-green-500' : 'bg-red-400'"
+          ></div>
         </div>
 
         <!-- Key takeaway -->

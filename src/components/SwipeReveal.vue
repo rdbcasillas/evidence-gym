@@ -48,29 +48,6 @@ const wasCorrect = computed(() => props.userClassification === props.card.correc
       </div>
 
       <div class="p-6 space-y-5">
-        <!-- User's justification if provided -->
-        <div v-if="props.userJustification">
-          <h3 class="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">Your Reasoning</h3>
-          <p class="text-gray-700 italic bg-gray-50 rounded-lg p-3">"{{ props.userJustification }}"</p>
-        </div>
-
-        <!-- Alternatives -->
-        <div>
-          <h3 class="text-xs font-medium uppercase tracking-wide text-gray-500 mb-3">Alternatives Considered</h3>
-          <ul class="space-y-2">
-            <li
-              v-for="(alt, index) in props.card.alternatives"
-              :key="index"
-              class="flex items-start gap-3 text-gray-700"
-            >
-              <span class="flex-shrink-0 w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-500">
-                {{ index + 1 }}
-              </span>
-              <span>{{ alt }}</span>
-            </li>
-          </ul>
-        </div>
-
         <!-- Explanation -->
         <div
           class="rounded-xl p-4"

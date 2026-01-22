@@ -51,27 +51,33 @@ const handleSkip = () => {
       </div>
 
       <div class="p-6 space-y-5">
-        <!-- Reminder of claim -->
-        <div class="bg-gray-50 rounded-xl p-4 text-sm">
-          <p class="text-gray-500 mb-1">Claim:</p>
-          <p class="text-gray-800 font-medium">{{ props.card.claim }}</p>
+        <!-- Reminder of claim and evidence -->
+        <div class="bg-gray-50 rounded-xl p-4 text-sm space-y-3">
+          <div>
+            <p class="text-gray-500 mb-1">Claim:</p>
+            <p class="text-gray-800 font-medium">{{ props.card.claim }}</p>
+          </div>
+          <div>
+            <p class="text-gray-500 mb-1">Evidence:</p>
+            <p class="text-gray-800">{{ props.card.evidence }}</p>
+          </div>
         </div>
 
         <!-- Question -->
         <div>
           <h3 class="text-lg font-semibold text-gray-900 mb-2">
-            Which alternative does this rule out?
+            Why do you think so?
           </h3>
           <p class="text-sm text-gray-500">
-            Optional: explain your reasoning
+            Brief reasoning (optional)
           </p>
         </div>
 
         <!-- Text input -->
         <textarea
           v-model="justification"
-          class="w-full h-24 p-4 border border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none text-gray-900 placeholder-gray-400"
-          placeholder="This evidence rules out... because..."
+          class="w-full h-20 p-4 border border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none text-gray-900 placeholder-gray-400"
+          placeholder="Because..."
         />
 
         <!-- Buttons -->
