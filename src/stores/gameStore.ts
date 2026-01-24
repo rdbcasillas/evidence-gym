@@ -9,7 +9,7 @@ import type {
   SwipeResponse,
 } from '@/types'
 import { CATEGORIES } from '@/types'
-import { getCardsByCategory, shuffleCards } from '@/data/sampleCards'
+import { getCardsByCategory } from '@/data/sampleCards'
 
 export const useGameStore = defineStore('game', () => {
   // State
@@ -76,7 +76,7 @@ export const useGameStore = defineStore('game', () => {
   // Actions
   function startSession(category: EvidenceCategory, cardCount?: number) {
     const categoryCards = getCardsByCategory(category)
-    let cards = shuffleCards(categoryCards)
+    let cards = [...categoryCards] // Fixed order for workshop consistency
 
     if (cardCount && cardCount < cards.length) {
       cards = cards.slice(0, cardCount)

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import type { DiscriminatingCard, SwipeClassification, CategoryInfo } from '@/types'
 
 const props = defineProps<{
@@ -11,46 +10,6 @@ const emit = defineEmits<{
   swipe: [classification: SwipeClassification]
 }>()
 
-// Simple drag state
-const isDragging = ref(false)
-const startX = ref(0)
-const offsetX = ref(0)
-
-const cardStyle = computed(() => {
-  if (!isDragging.value && offsetX.value === 0) return {}
-  return {
-    transform: `translateX(${offsetX.value}px) rotate(${offsetX.value * 0.03}deg)`,
-    transition: isDragging.value ? 'none' : 'transform 0.3s ease-out',
-  }
-})
-
-const swipeIndicator = computed(() => {
-  if (Math.abs(offsetX.value) < 50) return null
-  return offsetX.value > 0 ? 'discriminating' : 'non-discriminating'
-})
-
-const handlePointerDown = (e: PointerEvent) => {
-  isDragging.value = true
-  startX.value = e.clientX
-  ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
-}
-
-const handlePointerMove = (e: PointerEvent) => {
-  if (!isDragging.value) return
-  offsetX.value = e.clientX - startX.value
-}
-
-const handlePointerUp = () => {
-  if (!isDragging.value) return
-  isDragging.value = false
-
-  if (Math.abs(offsetX.value) >= 100) {
-    const classification: SwipeClassification = offsetX.value > 0 ? 'discriminating' : 'non-discriminating'
-    emit('swipe', classification)
-  }
-  offsetX.value = 0
-}
-
 const handleButtonClick = (classification: SwipeClassification) => {
   emit('swipe', classification)
 }
@@ -58,33 +17,8 @@ const handleButtonClick = (classification: SwipeClassification) => {
 
 <template>
   <div class="w-full max-w-lg mx-auto px-4">
-    <!-- Swipeable Card -->
-    <div
-      class="relative bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden cursor-grab active:cursor-grabbing select-none touch-none"
-      :class="{
-        'ring-4 ring-green-400': swipeIndicator === 'discriminating',
-        'ring-4 ring-blue-400': swipeIndicator === 'non-discriminating',
-      }"
-      :style="cardStyle"
-      @pointerdown="handlePointerDown"
-      @pointermove="handlePointerMove"
-      @pointerup="handlePointerUp"
-      @pointercancel="handlePointerUp"
-    >
-      <!-- Swipe indicators -->
-      <div
-        v-if="swipeIndicator === 'discriminating'"
-        class="absolute top-6 right-6 text-green-600 font-bold text-sm uppercase tracking-wide rotate-12 bg-green-50 px-3 py-1 rounded-lg"
-      >
-        Discriminates
-      </div>
-      <div
-        v-if="swipeIndicator === 'non-discriminating'"
-        class="absolute top-6 left-6 text-blue-600 font-bold text-sm uppercase tracking-wide -rotate-12 bg-blue-50 px-3 py-1 rounded-lg"
-      >
-        Doesn't
-      </div>
-
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
       <!-- Category header -->
       <div
         class="px-6 py-3 border-b border-gray-100"
@@ -118,7 +52,7 @@ const handleButtonClick = (classification: SwipeClassification) => {
         <!-- Question prompt -->
         <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
           <p class="text-gray-600 text-sm text-center">
-            Does this evidence help you choose between alternatives?
+            Would you expect this evidence even if the claim were false?
           </p>
         </div>
       </div>
@@ -141,10 +75,5 @@ const handleButtonClick = (classification: SwipeClassification) => {
         <span class="text-sm">Discriminates</span>
       </button>
     </div>
-
-    <!-- Hint -->
-    <p class="text-center text-xs text-gray-400 mt-4">
-      Swipe right for discriminates, left for doesn't — or use buttons
-    </p>
   </div>
 </template>

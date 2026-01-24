@@ -51,10 +51,16 @@ const handleSkip = () => {
       </div>
 
       <div class="p-6 space-y-5">
-        <!-- Reminder of claim -->
-        <div class="bg-gray-50 rounded-xl p-4 text-sm">
-          <p class="text-gray-500 mb-1">Claim:</p>
-          <p class="text-gray-800 font-medium">{{ props.card.claim }}</p>
+        <!-- Reminder of claim and evidence -->
+        <div class="bg-gray-50 rounded-xl p-4 text-sm space-y-3">
+          <div>
+            <p class="text-gray-500 mb-1">Claim:</p>
+            <p class="text-gray-800 font-medium">{{ props.card.claim }}</p>
+          </div>
+          <div>
+            <p class="text-gray-500 mb-1">Evidence:</p>
+            <p class="text-gray-800">{{ props.card.evidence }}</p>
+          </div>
         </div>
 
         <!-- Question -->
