@@ -136,14 +136,6 @@ const handleBackToCategory = () => {
         </button>
 
         <div class="flex items-center gap-3" v-if="gameStore.session && !gameStore.session.isComplete">
-          <!-- Category badge -->
-          <span
-            v-if="gameStore.currentCategory"
-            class="text-xs font-medium px-2 py-1 rounded-full"
-            :class="[gameStore.currentCategory.bgColor, gameStore.currentCategory.color]"
-          >
-            {{ gameStore.currentCategory.shortName }}
-          </span>
           <!-- Progress -->
           <span class="text-sm text-gray-500">
             {{ gameStore.progress.current }} / {{ gameStore.progress.total }}

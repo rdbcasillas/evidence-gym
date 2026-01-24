@@ -19,16 +19,6 @@ const handleButtonClick = (classification: SwipeClassification) => {
   <div class="w-full max-w-lg mx-auto px-4">
     <!-- Card -->
     <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-      <!-- Category header -->
-      <div
-        class="px-6 py-3 border-b border-gray-100"
-        :class="props.category.bgColor"
-      >
-        <p class="text-sm font-medium" :class="props.category.color">
-          {{ props.category.name }}
-        </p>
-      </div>
-
       <div class="p-6 space-y-5">
         <!-- Domain tag -->
         <div>
