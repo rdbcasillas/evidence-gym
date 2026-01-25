@@ -54,7 +54,7 @@ const nonDiscriminatingCards: DiscriminatingCard[] = [
     id: 'nd-3',
     category: 'non-discriminating',
     domain: 'AI',
-    claim: 'NexusLM demonstrates genuine semantic understanding, not just statistical pattern matching.',
+    claim: 'NexusLM demonstrates genuine semantic understanding.',
     evidence: 'In a double-blind evaluation, linguistics experts were unable to distinguish NexusLM\'s responses from human responses 87% of the time.',
     alternatives: [
       'NexusLM genuinely understands language',
@@ -84,7 +84,7 @@ const nonDiscriminatingCards: DiscriminatingCard[] = [
     ],
     observationShort: 'gamers more aggressive',
     claimShort: 'games cause aggression',
-    notClaimShort: 'aggressive teens choose games',
+    notClaimShort: 'aggressive teens choose violent games',
     probIfTrue: 'likely',
     probIfFalse: 'also likely',
     discriminatingAlt: 'Randomly assigning teens to play violent vs. non-violent games shows the violent game group becomes MORE aggressive',
