@@ -54,24 +54,60 @@ const wasCorrect = computed(() => props.userClassification === props.card.correc
           <p class="text-gray-700 italic bg-gray-50 rounded-lg p-3">"{{ props.userJustification }}"</p>
         </div>
 
-        <!-- The baseline explanation -->
+        <!-- The baseline explanation - structured display -->
         <div
-          class="rounded-xl p-4"
+          class="rounded-xl p-4 space-y-3"
           :class="{
             'bg-emerald-50 border border-emerald-100': props.card.correctClassification === 'baseline-missing',
             'bg-green-50 border border-green-100': props.card.correctClassification === 'baseline-considered',
           }"
         >
           <h3
-            class="text-xs font-medium uppercase tracking-wide mb-2"
+            class="text-xs font-medium uppercase tracking-wide"
             :class="{
               'text-emerald-700': props.card.correctClassification === 'baseline-missing',
               'text-green-700': props.card.correctClassification === 'baseline-considered',
             }"
           >
-            {{ props.card.correctClassification === 'baseline-missing' ? 'The Missing Baseline' : 'How Baseline Is Considered' }}
+            {{ props.card.correctClassification === 'baseline-missing' ? 'The Buried Base Rate' : 'The Base Rate Is Considered' }}
           </h3>
+
+          <!-- Structured display if fields exist -->
+          <template v-if="props.card.baselineQuestion">
+            <div class="space-y-2">
+              <p
+                class="text-sm"
+                :class="{
+                  'text-emerald-800': props.card.correctClassification === 'baseline-missing',
+                  'text-green-800': props.card.correctClassification === 'baseline-considered',
+                }"
+              >
+                <span class="font-semibold">Question to ask:</span> {{ props.card.baselineQuestion }}
+              </p>
+              <p
+                class="text-sm"
+                :class="{
+                  'text-emerald-800': props.card.correctClassification === 'baseline-missing',
+                  'text-green-800': props.card.correctClassification === 'baseline-considered',
+                }"
+              >
+                <span class="font-semibold">The base rate:</span> {{ props.card.actualBaseline }}
+              </p>
+              <p
+                class="font-semibold"
+                :class="{
+                  'text-emerald-900': props.card.correctClassification === 'baseline-missing',
+                  'text-green-900': props.card.correctClassification === 'baseline-considered',
+                }"
+              >
+                {{ props.card.comparisonInsight }}
+              </p>
+            </div>
+          </template>
+
+          <!-- Fallback to legacy field -->
           <p
+            v-else
             class="leading-relaxed"
             :class="{
               'text-emerald-900': props.card.correctClassification === 'baseline-missing',
@@ -82,9 +118,9 @@ const wasCorrect = computed(() => props.userClassification === props.card.correc
           </p>
         </div>
 
-        <!-- Explanation -->
+        <!-- Why this matters -->
         <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-          <h3 class="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">Explanation</h3>
+          <h3 class="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">Why This Matters</h3>
           <p class="text-gray-700 leading-relaxed">{{ props.card.explanation }}</p>
         </div>
 

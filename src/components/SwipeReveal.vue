@@ -15,6 +15,7 @@ const emit = defineEmits<{
 }>()
 
 const wasCorrect = computed(() => props.userClassification === props.card.correctClassification)
+const isNonDiscriminating = computed(() => props.card.correctClassification === 'non-discriminating')
 </script>
 
 <template>
@@ -48,31 +49,61 @@ const wasCorrect = computed(() => props.userClassification === props.card.correc
       </div>
 
       <div class="p-6 space-y-5">
+        <!-- Equation display -->
+        <div class="bg-slate-800 rounded-xl p-4 font-mono text-sm space-y-2">
+          <div class="flex items-center flex-wrap gap-1">
+            <span class="text-slate-400">P(</span>
+            <span class="text-cyan-300">{{ props.card.observationShort }}</span>
+            <span class="text-slate-400">|</span>
+            <span class="text-green-300">{{ props.card.claimShort }}</span>
+            <span class="text-slate-400">) =</span>
+            <span class="text-white font-bold">{{ props.card.probIfTrue }}</span>
+          </div>
+          <div class="flex items-center flex-wrap gap-1">
+            <span class="text-slate-400">P(</span>
+            <span class="text-cyan-300">{{ props.card.observationShort }}</span>
+            <span class="text-slate-400">|</span>
+            <span class="text-red-300">{{ props.card.notClaimShort }}</span>
+            <span class="text-slate-400">) =</span>
+            <span class="text-white font-bold">{{ props.card.probIfFalse }}</span>
+          </div>
+          <!-- Result -->
+          <div class="pt-2 border-t border-slate-600 mt-2">
+            <span v-if="isNonDiscriminating" class="text-blue-400">
+              Both likely → Doesn't discriminate
+            </span>
+            <span v-else class="text-green-400">
+              Different! → Discriminates
+            </span>
+          </div>
+        </div>
+
         <!-- Explanation -->
         <div
           class="rounded-xl p-4"
           :class="{
-            'bg-green-50 border border-green-100': props.card.correctClassification === 'discriminating',
-            'bg-blue-50 border border-blue-100': props.card.correctClassification === 'non-discriminating',
+            'bg-green-50 border border-green-100': !isNonDiscriminating,
+            'bg-blue-50 border border-blue-100': isNonDiscriminating,
           }"
         >
-          <h3
-            class="text-xs font-medium uppercase tracking-wide mb-2"
-            :class="{
-              'text-green-700': props.card.correctClassification === 'discriminating',
-              'text-blue-700': props.card.correctClassification === 'non-discriminating',
-            }"
-          >
-            Explanation
-          </h3>
           <p
-            class="leading-relaxed"
+            class="leading-relaxed text-sm"
             :class="{
-              'text-green-900': props.card.correctClassification === 'discriminating',
-              'text-blue-900': props.card.correctClassification === 'non-discriminating',
+              'text-green-900': !isNonDiscriminating,
+              'text-blue-900': isNonDiscriminating,
             }"
           >
             {{ props.card.explanation }}
+          </p>
+        </div>
+
+        <!-- What WOULD discriminate (for non-discriminating cards) -->
+        <div v-if="isNonDiscriminating && props.card.discriminatingAlt" class="rounded-xl p-4 bg-emerald-50 border border-emerald-100">
+          <h3 class="text-xs font-medium uppercase tracking-wide text-emerald-700 mb-2">
+            What would discriminate?
+          </h3>
+          <p class="text-sm text-emerald-900 leading-relaxed">
+            {{ props.card.discriminatingAlt }}
           </p>
         </div>
 
@@ -81,8 +112,8 @@ const wasCorrect = computed(() => props.userClassification === props.card.correc
           <span
             class="inline-block px-3 py-1 text-sm font-medium rounded-full"
             :class="{
-              'bg-green-100 text-green-700': props.card.correctClassification === 'discriminating',
-              'bg-gray-100 text-gray-600': props.card.correctClassification === 'non-discriminating',
+              'bg-green-100 text-green-700': !isNonDiscriminating,
+              'bg-gray-100 text-gray-600': isNonDiscriminating,
             }"
           >
             {{ props.card.tag }}

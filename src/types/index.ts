@@ -77,6 +77,14 @@ export interface BaseCard {
 export interface DiscriminatingCard extends BaseCard {
   category: 'non-discriminating'
   alternatives: string[]
+  // Compact labels for equation display on reveal
+  observationShort: string // Short version of observation for equation
+  claimShort: string // Short version of claim for equation
+  notClaimShort: string // Short version of ¬claim for equation
+  probIfTrue: string // e.g., "HIGH", "LOW"
+  probIfFalse: string // e.g., "HIGH", "LOW"
+  // For non-discriminating: what observation WOULD discriminate
+  discriminatingAlt?: string // e.g., "MAT patients improve MORE than control group"
   correctClassification: SwipeClassification
   explanation: string
   tag: string
@@ -97,7 +105,11 @@ export interface BaselineCard extends BaseCard {
   category: 'buried-baseline'
   scenario: string
   correctClassification: BaselineClassification
-  theBaseline: string // The base rate or comparison that's missing/present
+  theBaseline: string // Legacy field
+  // Structured baseline fields for explicit display
+  baselineQuestion?: string // e.g., "What percentage of ALL children receive the MMR vaccine?"
+  actualBaseline?: string // e.g., "91% of children are vaccinated"
+  comparisonInsight?: string // e.g., "87% is actually LOWER than 91%"
   explanation: string
   tag: string
 }
