@@ -110,6 +110,9 @@ export interface BaselineCard extends BaseCard {
   baselineQuestion?: string // e.g., "What percentage of ALL children receive the MMR vaccine?"
   actualBaseline?: string // e.g., "91% of children are vaccinated"
   comparisonInsight?: string // e.g., "87% is actually LOWER than 91%"
+  comparisonText?: string // Flowing comparison paragraph for the new reveal format
+  frameworkSee?: string // "When you see" part of the generalized framework
+  frameworkAsk?: string // "Ask" part of the generalized framework
   explanation: string
   tag: string
 }
